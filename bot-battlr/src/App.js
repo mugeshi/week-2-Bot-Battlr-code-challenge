@@ -3,7 +3,7 @@ import axios from 'axios';
 import BotCollection from './BotCollection';
 import YourBotArmy from './YourBotArmy';
 import SortBar from './SortBar';
-import './index.css';
+import './App.css';
 
 const App = () => {
   const [bots, setBots] = useState([]);
@@ -27,20 +27,17 @@ const App = () => {
     setSortKey(key);
   };
 
-  // Function to enlist a bot into the army
   const enlistBot = (bot) => {
     if (!enlistedBots.some((enlistedBot) => enlistedBot.bot_class === bot.bot_class)) {
       setEnlistedBots([...enlistedBots, bot]);
     }
   };
 
-  // Function to release a bot from the army
   const releaseBot = (bot) => {
     const updatedEnlistedBots = enlistedBots.filter((b) => b.id !== bot.id);
     setEnlistedBots(updatedEnlistedBots);
   };
 
-  // Function to discharge a bot from service (delete from backend and from enlistedBots)
   const dischargeBot = async (bot) => {
     try {
       await axios.delete(`http://localhost:8001/bots/${bot.id}`);
@@ -50,13 +47,14 @@ const App = () => {
     }
   };
 
-  // Sort the bots array based on the selected sortKey
   const sortedBots = bots.slice().sort((a, b) => b[sortKey] - a[sortKey]);
 
   return (
-    <div>
-      <h1>Welcome to Bot Battlr</h1>
-      <SortBar handleSort={handleSort} />
+    <div className="container">
+      <div className="header">
+        <h1>Welcome to Bot Battlr</h1>
+        <SortBar handleSort={handleSort} />
+      </div>
       <BotCollection bots={sortedBots} enlistBot={enlistBot} />
       <YourBotArmy enlistedBots={enlistedBots} releaseBot={releaseBot} dischargeBot={dischargeBot} />
     </div>

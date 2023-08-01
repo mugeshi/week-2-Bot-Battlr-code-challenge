@@ -1,3 +1,5 @@
+
+/* index.css */
 body {
   background-color: #ffe6f4; /* Light pink background color */
   font-family: Arial, sans-serif;
@@ -11,74 +13,57 @@ body {
   padding: 20px;
 }
 
-h1 {
-  color: #880088; /* Purple heading color */
+/* Header styles */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
 }
 
-h2 {
-  color: #008800; /* Green heading color */
-  margin-top: 40px;
+h1 {
+  color: #880088; /* Purple heading color */
+  margin-bottom: 10px;
+}
+
+.sorting {
+  display: flex;
+  justify-content: center;
 }
 
 /* Bot card styles */
 .bot-card {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: #ff0000; /* Red background color for the card */
+  color: #fff; /* Text color for the card content */
   border-radius: 5px;
-  padding: 20px;
   margin-bottom: 20px;
-  display: flex; /* Changed to flex layout */
-  flex-direction: column; /* Arrange items in a column */
-  align-items: center; /* Center items horizontally */
+  width: 200px;
 }
 
 .bot-card img {
   width: 100px;
   height: 100px;
+  object-fit: cover;
   border-radius: 50%;
-  margin-bottom: 10px; /* Added some spacing at the bottom */
-}
-
-.bot-card-content {
-  flex: 1;
 }
 
 .bot-card h3 {
-  margin: 0;
+  margin: 5px 0;
 }
 
 .bot-card p {
   margin: 5px 0;
 }
 
-.bot-card button {
-  background-color: #008800; /* Green button color */
-  color: #fff;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.bot-card button.delete {
-  background-color: #ff0000; /* Red delete button color */
-  margin-top: 10px; /* Added some spacing at the top */
-}
-
-.bot-card button:hover {
-  opacity: 0.8;
-}
-
-/* Bot collection styles */
-.bot-collection {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around; /* Add some space between cards */
-}
-
 /* Your bot army styles */
 .your-bot-army {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around; /* Add some space between cards */
+  justify-content: flex-start;
+  gap: 20px;
 }

@@ -1,11 +1,10 @@
-
 import React from 'react';
 
 const BotCard = ({ bot, handleClick, showDeleteButton, handleDelete }) => {
   const { name, health, damage, armor, bot_class, catchphrase, avatar_url } = bot;
 
   return (
-    <div>
+    <div className="bot-card">
       <img src={avatar_url} alt={name} />
       <h3>{name}</h3>
       <p>Health: {health}</p>
@@ -20,3 +19,4 @@ const BotCard = ({ bot, handleClick, showDeleteButton, handleDelete }) => {
 };
 
 export default BotCard;
+
