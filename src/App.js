@@ -17,7 +17,7 @@ const App = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8001/bots');
+      const response = await axios.get('https://botdata.onrender.com/bots/');
       setBots(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -41,7 +41,7 @@ const App = () => {
 
   const dischargeBot = async (bot) => {
     try {
-      await axios.delete(`http://localhost:8001/bots/${bot.id}`);
+      await axios.delete(`https://botdata.onrender.com/bots/${bot.id}`);
       releaseBot(bot);
     } catch (error) {
       console.error('Error discharging bot:', error);
