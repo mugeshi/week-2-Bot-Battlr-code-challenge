@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+Bot Battlr
+Welcome to Bot Battlr, the one and only spot in the known universe where you can custom build your own Bot Army!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Introduction
+Bot Battlr is a React application that allows users to browse through a list of robots, view a robot's details, enlist bots into their army, release bots from their army, and even discharge bots forever.
 
-## Available Scripts
+Getting Started
+To get started with the project, follow these steps:
 
-In the project directory, you can run:
+Clone the repository from GitHub.
+Navigate to the project directory.
+Install the dependencies by running: npm install
+Create a db.json file in the project directory with the data provided in the project guidelines.
+Run the JSON DB server by executing: json-server --watch db.json
+Test the server by visiting this route in the browser: http://localhost:8001/bots
+Usage
+As a user, you can perform the following actions in the application:
 
-### `npm start`
+View profiles of all bots rendered in BotCollection.
+Add an individual bot to your army by clicking on it. The selected bot will render in the YourBotArmy component. A bot can be enlisted only once.
+Release a bot from your army by clicking on it. The bot will disappear from the YourBotArmy component.
+Discharge a bot from your service forever by clicking the red button marked "x," which will delete the bot both from the backend and from the YourBotArmy on the frontend.
+Advanced Deliverables (Optional)
+If you have extra time or want to challenge yourself further, consider implementing the following additional features:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Display a show view (BotSpecs) for a bot when clicking on the card in BotCollection. The show view should have buttons to go back to the list view and to enlist that bot.
+Sort bots by their health, damage, or armor using a new component, SortBar.
+Filter bots by their class, allowing multiple filters at the same time.
+Enlist only one bot from each bot_class (classes: ["Support", "Medic", "Assault", "Defender", "Captain", "Witch"]).
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+License
+This project is licensed under the MIT License. Feel free to use, modify, and distribute the code as per the terms of the MIT License.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Author
+Nicole Mugeshi
