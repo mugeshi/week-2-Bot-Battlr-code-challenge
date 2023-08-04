@@ -1,23 +1,17 @@
 import React from "react";
 
-export default function CustomSortBar({ onSortChange }) {
-  const options = [
-    { value: "", label: "Choose an Option" },
-    { value: "health", label: "Sort by Health" },
-    { value: "damage", label: "Sort by Damage" },
-    { value: "armor", label: "Sort by Armor" },
-  ];
+export default function SortBar({onSortChange}) {
 
-  return (
-    <div className="custom-sort-bar">
-      <span>Order by:</span>
-      <select onChange={(e) => onSortChange(e.target.value)}>
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
+    //Drop down menu for sorting
+    return(
+        <div className="sort-bar">
+      <label htmlFor="sortSelect">Sort by:</label>
+      <select id="sortSelect" onChange={(e) => onSortChange(e.target.value)}>
+        <option value="">Select Option</option>
+        <option value="health">Health</option>
+        <option value="damage">Damage</option>
+        <option value="armor">Armor</option>
       </select>
     </div>
-  );
+    )
 }
