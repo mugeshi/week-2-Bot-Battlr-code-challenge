@@ -1,65 +1,68 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, {useState, useEffect} from 'react';
 import BotCollection from './BotCollection';
 import YourBotArmy from './YourBotArmy';
 import SortBar from './SortBar';
 import './App.css';
-//App
 
-const App = () => {
-  const [bots, setBots] = useState([]);
-  const [enlistedBots, setEnlistedBots] = useState([]);
-  const [sortKey, setSortKey] = useState('health'); // Default sort key
+function App() {
+  //Declared variables for rendering the bots
+    const [bots, setBots] = useState([]);
+    const [yourBotArmy, setYourBotArmy] = useState([]);
+    const [sortBy, setSortBy] = useState(null);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+   
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get('https://botdata.onrender.com/bots/');
-      setBots(response.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
+
+    //Fetching the bot data from deployed db.json 
+    useEffect(() => {
+      fetch('https://bot-app-data.onrender.com/bots')
+        .then((response) => response.json())
+        .then((data) => setBots(data))
+        .catch((error) => console.error('Error fetching data:', error));
+    }, []);
+
+
+     // Function to add a bot to the bot army
+  const addToYourBotArmy = (bot) => {
+    // Check if the bot is not already in the yourBotArmy before adding
+    if (!yourBotArmy.find((b) => b.id === bot.id)) {
+      setYourBotArmy([...yourBotArmy, bot]);
     }
   };
 
-  const handleSort = (key) => {
-    setSortKey(key);
+  // Function to remove a bot from the yourBotArmy
+  const removeFromYourBotArmy = (bot) => {
+    setYourBotArmy(yourBotArmy.filter((b) => b.id !== bot.id));
   };
 
-  const enlistBot = (bot) => {
-    if (!enlistedBots.some((enlistedBot) => enlistedBot.bot_class === bot.bot_class)) {
-      setEnlistedBots([...enlistedBots, bot]);
-    }
+  //function to delete bot from deployed DB 
+
+  const handleBotDeletion = (botId) => {
+    fetch(`https://bot-app-data.onrender.com/bots/${botId}`, {
+      method: 'DELETE',
+    })
+      .then((response) => response.json())
+      .then(() => {
+        setBots((prevBots) =>
+        prevBots.filter((bot) => bot.id !== botId)
+        );
+      })
+      .catch((error) => console.error('Error deleting bots:', error));
   };
 
-  const releaseBot = (bot) => {
-    const updatedEnlistedBots = enlistedBots.filter((b) => b.id !== bot.id);
-    setEnlistedBots(updatedEnlistedBots);
-  };
-
-  const dischargeBot = async (bot) => {
-    try {
-      await axios.delete(`https://botdata.onrender.com/bots/${bot.id}`);
-      releaseBot(bot);
-    } catch (error) {
-      console.error('Error discharging bot:', error);
-    }
-  };
-
-  const sortedBots = bots.slice().sort((a, b) => b[sortKey] - a[sortKey]);
+  //function to handle sorting
+  const handleSortChange = (sortBy) => {
+    setSortBy(sortBy)
+  }
 
   return (
-    <div className="container">
-      <div className="header">
-        <h1>Welcome to Bot Battlr</h1>
-        <SortBar handleSort={handleSort} />
-      </div>
-      <BotCollection bots={sortedBots} enlistBot={enlistBot} />
-      <YourBotArmy enlistedBots={enlistedBots} releaseBot={releaseBot} dischargeBot={dischargeBot} />
+    //Rendering bots on the web page
+    <div className="App">
+      <YourBotArmy bots={bots} yourBotArmy={yourBotArmy} removeFromArmy={removeFromYourBotArmy} botDeletion={handleBotDeletion} />
+      <SortBar onSortChange={handleSortChange}/>
+      <BotCollection bots={bots}  addToArmy={addToYourBotArmy} sortBy={sortBy}   />
     </div>
   );
-};
+}
 
 export default App;

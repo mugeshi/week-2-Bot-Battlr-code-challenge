@@ -1,35 +1,38 @@
-import React, { useState } from 'react';
-import BotCard from './BotCard';
+import React from "react";
 
-const BotCollection = ({ bots, enlistBot }) => {
-  const [filterClass, setFilterClass] = useState('');
+export default function BotCollection({bots, addToArmy, sortBy}){
+  
+    //Where we handle the sorting of the bots
+    const sortedBots = [...bots];
+    if (sortBy === "health") {
+      sortedBots.sort((a, b) => a.health - b.health);
+    } else if (sortBy === "damage") {
+      sortedBots.sort((a, b) => a.damage - b.damage);
+    } else if (sortBy === "armor") {
+      sortedBots.sort((a, b) => a.armor - b.armor);
+    }
 
-  const filteredBots = filterClass
-    ? bots.filter((bot) => bot.bot_class === filterClass)
-    : bots;
 
-  return (
-    <div>
-      <h2>Available Bots</h2>
-      <div>
-        <label htmlFor="filter">Filter by Class: </label>
-        <select id="filter" onChange={(e) => setFilterClass(e.target.value)}>
-          <option value="">All</option>
-          <option value="Support">Support</option>
-          <option value="Medic">Medic</option>
-          <option value="Assault">Assault</option>
-          <option value="Defender">Defender</option>
-          <option value="Captain">Captain</option>
-          <option value="Witch">Witch</option>
-        </select>
-      </div>
-      <div>
-        {filteredBots.map((bot) => (
-          <BotCard key={bot.id} bot={bot} handleClick={() => enlistBot(bot)} />
-        ))}
-      </div>
-    </div>
-  );
-};
-
-export default BotCollection;
+    //Renderd bots
+        return(
+            <div className="container">
+                {sortedBots.map((bot) => (
+                    <div className="element" key={bot.id} onClick={()=> addToArmy(bot)} >
+                        
+                        <img src={bot.avatar_url} alt={bot.name}/>
+                        
+                        <h3>Bot Name:  {bot.name}</h3>
+                        <p>Class :  {bot.bot_class}</p>
+                        <p>Catch Phrase :  {bot.catchphrase}</p>
+                        <p>Armor :  {bot.armor}</p>
+                        <p>Health :  {bot.health}</p>
+                        <p>Damage :  {bot.damage}</p>
+                        <p>Created At :  {bot.created_at}</p>
+                        <p>Updated at :  {bot.updated_at}</p>
+                        
+                        
+                    </div>
+                ))}
+            </div>
+        )
+}
