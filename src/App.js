@@ -1,66 +1,74 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import BotCollection from './BotCollection';
 import YourBotArmy from './YourBotArmy';
 import SortBar from './SortBar';
 import './App.css';
 
 function App() {
-  //Declared variables for rendering the bots
-    const [bots, setBots] = useState([]);
-    const [yourBotArmy, setYourBotArmy] = useState([]);
-    const [sortBy, setSortBy] = useState(null);
+  // State variables to hold the bot data, your bot army, and the sorting option
+  const [bots, setBots] = useState([]);
+  const [yourBotArmy, setYourBotArmy] = useState([]);
+  const [sortBy, setSortBy] = useState(null);
 
-   
+  // Fetch bot data from the server when the component mounts
+  useEffect(() => {
+    fetchBotData();
+  }, []);
 
-
-    //Fetching the bot data from deployed db.json 
-    useEffect(() => {
-      fetch('https://bot-app-data.onrender.com/bots')
-        .then((response) => response.json())
-        .then((data) => setBots(data))
-        .catch((error) => console.error('Error fetching data:', error));
-    }, []);
-
-
-     // Function to add a bot to the bot army
-  const addToYourBotArmy = (bot) => {
-    // Check if the bot is not already in the yourBotArmy before adding
-    if (!yourBotArmy.find((b) => b.id === bot.id)) {
-      setYourBotArmy([...yourBotArmy, bot]);
+  // Function to fetch bot data from the server
+  const fetchBotData = async () => {
+    try {
+      const response = await fetch('https://bot-app-data.onrender.com/bots');
+      const data = await response.json();
+      setBots(data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
     }
   };
 
-  // Function to remove a bot from the yourBotArmy
+  // Function to add a bot to your bot army
+  const addToYourBotArmy = (bot) => {
+    if (!yourBotArmy.find((b) => b.id === bot.id)) {
+      setYourBotArmy((prevArmy) => [...prevArmy, bot]);
+    }
+  };
+
+  // Function to remove a bot from your bot army
   const removeFromYourBotArmy = (bot) => {
-    setYourBotArmy(yourBotArmy.filter((b) => b.id !== bot.id));
+    setYourBotArmy((prevArmy) => prevArmy.filter((b) => b.id !== bot.id));
   };
 
-  //function to delete bot from deployed DB 
+  // Function to handle bot deletion from the server
+  const handleBotDeletion = async (botId) => {
+    try {
+      await fetch(`https://bot-app-data.onrender.com/bots/${botId}`, {
+        method: 'DELETE',
+      });
 
-  const handleBotDeletion = (botId) => {
-    fetch(`https://bot-app-data.onrender.com/bots/${botId}`, {
-      method: 'DELETE',
-    })
-      .then((response) => response.json())
-      .then(() => {
-        setBots((prevBots) =>
-        prevBots.filter((bot) => bot.id !== botId)
-        );
-      })
-      .catch((error) => console.error('Error deleting bots:', error));
+      setBots((prevBots) => prevBots.filter((bot) => bot.id !== botId));
+    } catch (error) {
+      console.error('Error deleting bots:', error);
+    }
   };
 
-  //function to handle sorting
+  // Function to handle sorting change
   const handleSortChange = (sortBy) => {
-    setSortBy(sortBy)
-  }
+    setSortBy(sortBy);
+  };
 
   return (
-    //Rendering bots on the web page
     <div className="App">
-      <YourBotArmy bots={bots} yourBotArmy={yourBotArmy} removeFromArmy={removeFromYourBotArmy} botDeletion={handleBotDeletion} />
-      <SortBar onSortChange={handleSortChange}/>
-      <BotCollection bots={bots}  addToArmy={addToYourBotArmy} sortBy={sortBy}   />
+      {/* Display your bot army */}
+      <YourBotArmy
+        bots={bots}
+        yourBotArmy={yourBotArmy}
+        removeFromArmy={removeFromYourBotArmy}
+        botDeletion={handleBotDeletion}
+      />
+      {/* Display the sorting bar */}
+      <SortBar onSortChange={handleSortChange} />
+      {/* Display the bot collection */}
+      <BotCollection bots={bots} addToArmy={addToYourBotArmy} sortBy={sortBy} />
     </div>
   );
 }
